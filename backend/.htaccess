@@ -1,0 +1,32 @@
+RewriteEngine on
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+
+#prevent viewing foldexs or indexing of files and folders
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+#block access to hidden directories
+<IfModule mod_rewrite.c>
+    RewriteCond %{SCRIPT_FILENAME} -d
+    RewriteCond %{SCRIPT_FILENAME} -f
+    RewriteRule "(^|/)." - [F]
+</IfModule>
+
+#bloc access to backup/source files
+<FilesMatch "(\\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+#increase cookie security
+<IfModule php5_module>
+    php_value session.cookie_httponly true
+</IfModule>
