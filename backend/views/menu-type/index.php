@@ -6,28 +6,39 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Menu Types');
+$this->title = Yii::t('app', 'Manage Menu Types');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="menu-type-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Menu Type'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'menu_type_id',
-            'menu_type_name',
-            'menu_type_desc',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+<div class="row">
+    <div class="col-lg-4">
+        <?= Html::a(Yii::t('app', 'Add Menu Type'), ['create'], ['class' => 'btn btn-white btn-sm']) ?>
+    </div>
 </div>
+
+<div class="row">
+    <div class='col-lg-12'>
+        <div class="ibox">
+            <div class="ibox-content">
+                <?= \kartik\grid\GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                        
+                        'menu_type_name',
+                        'menu_type_desc',
+
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'header' => 'Action',
+                            'template' => '{update} {delete}'
+                        ],
+                    ],
+                    'export' => FALSE,
+                    'bordered' => FALSE,
+                    'hover' => TRUE,
+                ]); ?>
+            </div>
+        </div>
+    </div>
+</div>
+

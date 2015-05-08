@@ -7,45 +7,76 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Categories');
+$this->title = Yii::t('app', 'Manage Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-index">
+<div class="row">
+    <div class='col-lg-4'>
+        <div class="index-menu" style='margin-bottom: 20px;'>
+        <?= Html::a(Yii::t('app', 'Add Category'), ['create'], ['class' => 'btn btn-white btn-sm']) ?>
+        <?= Html::a(Yii::t('app','Batch Delete'),['delete-selected'],['class' => 'btn btn-white btn-sm']) ?>
+        </div>
+    </div>
+</div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                    <?=    kartik\grid\GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Category'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+            //            'category_id',
+                        'category_name',
+                        'category_desc',
+                        [
+                            'attribute' => 'category_type_id',
+//                            'format' => 'raw',
+                            'filterType' => kartik\grid\GridView::FILTER_SELECT2,
+                            'filterWidgetOptions'=>['options'=>['placeholder'=>'Select Category Type'],'pluginOptions'=>['allowClear'=>TRUE]],
+                            'filter'=> common\helpers\CategoryTypeHelper::getTypes(),
+                            
+                            'value' => function($model, $key, $index){
+                                return \common\helpers\CategoryTypeHelper::getTypeName($model->category_type_id);
+                            }
+                            
+                        ],
+                                
+                        [
+                            'attribute' => 'parent_category',
+                            'filterType' => kartik\grid\GridView::FILTER_SELECT2,
+                            'filterWidgetOptions'=>['options'=>['placeholder'=>'Select Parent Category'],'pluginOptions'=>['allowClear'=>TRUE]],
+                            'filter' => yii\helpers\ArrayHelper::map(common\models\Category::find()->where(['parent_category'=>0])->asArray()->all(),"category_id","category_name"),
+                            'value' =>function($model,$key,$index){
+                                return ($model->parent_category == 0) ? '-': TRUE;
+                            }
+                        ],
 
-    <?=    kartik\grid\GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-//            'category_id',
-            'category_name',
-            'category_desc',
-            'category_type_id',
-            'parent_category',
-
-            ['class' => 'yii\grid\ActionColumn',
-                'header' => 'Action',
-                'template' => "{subcategory} {update} {delete}",
-                'buttons' =>[
-                    'subcategory' => function($url,$model,$key){
-                        return Html::a("<i class='glyphicon glyphicon-user'></i>",$url);
-                    }
-                ]
-            ],
-            [
-                'class'=> 'yii\grid\CheckboxColumn',
-                'multiple' => TRUE
-            ]
-        ],
-        'export' => FALSE
-    ]); ?>
-
+                        ['class' => 'yii\grid\ActionColumn',
+                            'header' => 'Action',
+                            'template' => "{subcategory} {update} {delete}",
+                            'buttons' =>[
+                                'subcategory' => function($url,$model,$key){
+                                    return Html::a("<i class='glyphicon glyphicon-user'></i>",$url);
+                                }
+                            ]
+                        ],
+                        [
+                            'class'=> 'yii\grid\CheckboxColumn',
+                            'multiple' => TRUE
+                        ]
+                    ],
+//                    'emptyCell' => '-',
+                    'export' => FALSE,
+                    'bordered' => FALSE,
+                    'hover' => TRUE,
+//                    'resizable' => TRUE,
+                ]); ?>
+                    
+            </div>
+        </div>
+    </div>
 </div>

@@ -23,6 +23,15 @@ class MenuTypeController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' =>[
+                'class' => \yii\filters\AccessControl::className(),
+                'rules'=>[
+                    [
+                        'allow' => TRUE,
+                        'roles' => ['@']
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -46,12 +55,12 @@ class MenuTypeController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+//    public function actionView($id)
+//    {
+//        return $this->render('view', [
+//            'model' => $this->findModel($id),
+//        ]);
+//    }
 
     /**
      * Creates a new MenuType model.
@@ -63,7 +72,7 @@ class MenuTypeController extends Controller
         $model = new MenuType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menu_type_id]);
+            return $this->redirect('index');
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -82,7 +91,7 @@ class MenuTypeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menu_type_id]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,

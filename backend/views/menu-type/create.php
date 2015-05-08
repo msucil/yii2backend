@@ -6,16 +6,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\MenuType */
 
-$this->title = Yii::t('app', 'Create Menu Type');
+$this->title = Yii::t('app', 'Add Menu Type');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Menu Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="menu-type-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+<div class="row">
+    <div class="col-lg-12">
+        <div class='ibox'>
+            <div class='ibox-content'>
+                <?= $this->render('_form', [
+                    'model' => $model,
+                ]) ?>
+            </div>
+        </div>
+    </div>
 </div>

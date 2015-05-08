@@ -16,11 +16,32 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@backtheme';
     public $css = [
-        'css/site.css',
+        
+        "font-awesome/css/font-awesome.css",
+        "css/plugins/morris/morris-0.4.3.min.css",
+        "css/animate.css",
+        "css/style.css"
+        
     ];
+    
     public $js = [
+        //main script 
+//        "js/jquery-2.1.1.js",
+        "js/bootstrap.min.js",
+        'js/plugins/metisMenu/jquery.metisMenu.js',
+        'js/plugins/slimscroll/jquery.slimscroll.min.js',
+        
+        "js/plugins/jquery-ui/jquery-ui.min.js",
+//        "js/plugins/peity/jquery.peity.min.js",
+//        "js/demo/peity-demo.js",
+        //custom plugin
+        "js/inspinia.js",
+        "js/plugins/pace/pace.min.js",
+        
+        
+//        'js/inspinia.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

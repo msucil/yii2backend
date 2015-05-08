@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Menu;
-use common\models\MenuSearch;
+use backend\models\MenuSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,6 +23,15 @@ class MenuController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' =>[
+                'class' => \yii\filters\AccessControl::className(),
+                'rules'=>[
+                    [
+                        'allow' => TRUE,
+                        'roles' => ['@']
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -46,12 +55,12 @@ class MenuController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+//    public function actionView($id)
+//    {
+//        return $this->render('view', [
+//            'model' => $this->findModel($id),
+//        ]);
+//    }
 
     /**
      * Creates a new Menu model.

@@ -18,7 +18,7 @@ class MenuSearch extends Menu
     public function rules()
     {
         return [
-            [['menu_id', 'category_id', 'parent_id', 'menu_type_id', 'menu_order'], 'integer'],
+            [['menu_id', 'category_id', 'parent_menu', 'menu_type_id', 'menu_order'], 'integer'],
             [['menu_name'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class MenuSearch extends Menu
         $query->andFilterWhere([
             'menu_id' => $this->menu_id,
             'category_id' => $this->category_id,
-            'parent_id' => $this->parent_id,
+            'parent_menu' => $this->parent_menu,
             'menu_type_id' => $this->menu_type_id,
             'menu_order' => $this->menu_order,
         ]);

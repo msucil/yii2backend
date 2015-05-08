@@ -23,6 +23,15 @@ class CategoryTypeController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' =>[
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => TRUE,
+                        'roles' => ['@']
+                    ]
+                ]
+            ]
         ];
     }
 

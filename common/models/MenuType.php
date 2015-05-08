@@ -41,7 +41,7 @@ class MenuType extends \yii\db\ActiveRecord
         return [
             'menu_type_id' => Yii::t('app', 'Menu Type ID'),
             'menu_type_name' => Yii::t('app', 'Menu Type Name'),
-            'menu_type_desc' => Yii::t('app', 'Menu Type Desc'),
+            'menu_type_desc' => Yii::t('app', 'Description'),
         ];
     }
 }

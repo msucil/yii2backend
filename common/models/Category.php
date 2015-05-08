@@ -44,7 +44,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'category_id' => Yii::t('app', 'Category ID'),
             'category_name' => Yii::t('app', 'Category Name'),
-            'category_desc' => Yii::t('app', 'Category Desc'),
+            'category_desc' => Yii::t('app', 'Description'),
             'category_type_id' => Yii::t('app', 'Category Type'),
             'parent_category' => Yii::t('app', 'Parent Category'),
         ];
