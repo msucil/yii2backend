@@ -2,7 +2,7 @@
 
 namespace backend\helpers;
 
-use yii;
+use Yii;
 
 
 /**
@@ -17,7 +17,7 @@ class FormFileHelper {
      * @return string upload path defined on the common/bootstrap.php file
      */
     public static function getUploadPath(){
-        Yii::getAlias("@upload")."/";
+        return Yii::getAlias("@upload")."/";
     }
     
     /*

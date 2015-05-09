@@ -8,3 +8,14 @@
 
 use Yii;
 
+class ShowFormErro extends yii\base\Widget{
+    
+    public function init() {
+        parent::init();
+    }
+    
+    public function run() {
+        parent::run();
+    }
+}
+

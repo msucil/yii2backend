@@ -8,6 +8,11 @@ use backend\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+
+use backend\helpers\FormFileHelper;
+use backend\helpers\ModelInputHelper;
+use common\helpers\GeneralHelper;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -44,7 +49,6 @@ class PostController extends Controller
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        Yii::$app->session->setFlash('success',"Testing Growl Message");
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -72,8 +76,33 @@ class PostController extends Controller
     {
         $model = new Post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+        if ($model->load(Yii::$app->request->post())) {
+            $model->slug = ModelInputHelper::getSlug($model->post_title);
+            $model->user_id = GeneralHelper::getUserId();
+            $model->updated_at = ModelInputHelper::getDateTime();
+            
+            if(!$model->validate()){
+                return $this->render('create',['model'=>$model]);
+            }
+            
+            $image = UploadedFile::getInstance($model, "image");
+            if($image){
+                $image->name = FormFileHelper::getFileName($image->name);
+                if(!$image->saveAs(FormFileHelper::getUploadPath().$image, FALSE))
+                    $model->addError ('image', $image->error);
+                
+                $model->image = $image;
+            }
+            
+            if($model->save()){
+                Yii::$app->session->setFlash("success", $model->post_title." Successfully Saved!");
+                return $this->redirect(['index']);
+            }
+            else{
+                Yii::$app->session->setFlash("error", "Error occured while saving ".$model->post_title."!");
+                return $this->render('create',['model' => $model]);
+            }
+            
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -131,5 +160,8 @@ class PostController extends Controller
     
     public function actionTest(){
         print_r( \backend\helpers\FormFileHelper::getFileName("sample.jpg"));
+        echo \backend\helpers\ModelInputHelper::getDateTime();
+        echo "<br/>";
+        echo FormFileHelper::getUploadPath();
     }
 }

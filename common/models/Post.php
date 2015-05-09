@@ -43,7 +43,7 @@ class Post extends \yii\db\ActiveRecord
             [['status_id', 'featured_post', 'main_page', 'user_id', 'category_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['post_title', 'slug', 'meta_tags', 'meta_desc'], 'string', 'max' => 250],
-            [['image'], 'string', 'max' => 150]
+            [['image'], 'file','extensions' =>['jpeg','jpg','png','gif']]
         ];
     }
 

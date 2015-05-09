@@ -10,9 +10,17 @@ use common\models\Category;
 /* @var $form yii\widgets\ActiveForm */
 ?>  
 
-
+   
 
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
+       
+    <?php if($model->hasErrors()): ?>
+                <?= kartik\widgets\Alert::widget([
+                    'body' => $form->errorSummary($model),
+                    'type' => kartik\widgets\Alert::TYPE_WARNING
+                ]); ?>
+           
+    <?php endif; ?>
     
     <div class="row">
         <div class="col-lg-12">
@@ -79,6 +87,12 @@ use common\models\Category;
                         ],
                         
                     ]) ?>
+                    
+                    <?php if($model->image): ?>
+                    <div class="form-group">
+                        <label class="control-label" for="rm-image"><input id="rm-image" type="checkbox" value="1" class="" name="removeImage" /> Remove Image</label>
+                    </div>
+                    <?php endif; ?>
 
                     <?= $form->field($model, 'meta_tags')->textInput(['maxlength' => 250]) ?>
 
