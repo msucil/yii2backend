@@ -19,7 +19,7 @@ class PostSearch extends Post
     {
         return [
             [['post_id', 'status_id', 'featured_post', 'main_page', 'user_id', 'category_id'], 'integer'],
-            [['post_title', 'slug', 'post_content', 'meta_tags', 'meta_desc', 'image', 'created_at', 'updated_at'], 'safe'],
+            [['post_title', 'created_at'], 'safe'],
         ];
     }
 
@@ -56,22 +56,22 @@ class PostSearch extends Post
         }
 
         $query->andFilterWhere([
-            'post_id' => $this->post_id,
+//            'post_id' => $this->post_id,
             'status_id' => $this->status_id,
             'featured_post' => $this->featured_post,
-            'main_page' => $this->main_page,
+//            'main_page' => $this->main_page,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+//            'updated_at' => $this->updated_at,
             'user_id' => $this->user_id,
             'category_id' => $this->category_id,
         ]);
 
-        $query->andFilterWhere(['like', 'post_title', $this->post_title])
-            ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'post_content', $this->post_content])
-            ->andFilterWhere(['like', 'meta_tags', $this->meta_tags])
-            ->andFilterWhere(['like', 'meta_desc', $this->meta_desc])
-            ->andFilterWhere(['like', 'image', $this->image]);
+        $query->andFilterWhere(['like', 'post_title', $this->post_title]);
+//            ->andFilterWhere(['like', 'slug', $this->slug])
+//            ->andFilterWhere(['like', 'post_content', $this->post_content])
+//            ->andFilterWhere(['like', 'meta_tags', $this->meta_tags])
+//            ->andFilterWhere(['like', 'meta_desc', $this->meta_desc])
+//            ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;
     }

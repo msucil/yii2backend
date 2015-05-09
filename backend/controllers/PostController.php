@@ -77,6 +77,7 @@ class PostController extends Controller
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post())) {
+            
             $model->slug = ModelInputHelper::getSlug($model->post_title);
             $model->user_id = GeneralHelper::getUserId();
             $model->updated_at = ModelInputHelper::getDateTime();
@@ -93,6 +94,8 @@ class PostController extends Controller
                 
                 $model->image = $image;
             }
+            
+            
             
             if($model->save()){
                 Yii::$app->session->setFlash("success", $model->post_title." Successfully Saved!");
@@ -120,8 +123,44 @@ class PostController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+        if ($model->load(Yii::$app->request->post())) {
+            $old = $this->findModel($model->post_id);
+            
+            $model->slug = ModelInputHelper::getSlug($model->post_title);
+//            $model->user_id = GeneralHelper::getUserId();
+            $model->updated_at = ModelInputHelper::getDateTime();
+            
+            if(!$model->validate()){
+                return $this->render('create',['model'=>$model]);
+            }
+            
+            $image = UploadedFile::getInstance($model, "image");
+            if($image){
+                $image->name = FormFileHelper::getFileName($image->name);
+                if(!$image->saveAs(FormFileHelper::getUploadPath().$image, FALSE))
+                    $model->addError ('image', $image->error);
+                
+                $model->image = $image;
+            }
+            elseif(isset($_POST['removeImage'])){
+//                die();
+                $model->image = NULL;
+                
+                @unlink(FormFileHelper::getUploadPath().$old->image);
+            }
+            else{
+                $model->image = $old->image;
+            }
+            
+            if($model->save()){
+                Yii::$app->session->setFlash("success", $model->post_title." Successfully Updated!");
+                return $this->redirect(['index']);
+            }
+            else{
+                Yii::$app->session->setFlash("error", "Error occured while updating ".$model->post_title."!");
+                return $this->render('create',['model' => $model]);
+            }
+            
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -137,7 +176,16 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        if($this->findModel($id)->delete()){
+            @unlink(FormFileHelper::getUploadPath().$model->image);
+           
+            Yii::$app->session->setFlash("success", $model->post_title." Successfully Deleted!");
+        }
+        else {
+            Yii::$app->session->setFlash("error", $model->post_title." Successfully Deleted!");
+        }
 
         return $this->redirect(['index']);
     }

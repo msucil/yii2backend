@@ -1,4 +1,4 @@
-uploads/
-files/
+uploads/*
+files/*
 .*
 
