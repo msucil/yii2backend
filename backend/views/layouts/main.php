@@ -52,6 +52,22 @@ $method = Yii::$app->controller->action->id;
                     <a href="<?= Url::to(['/site']); ?>"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span></a>
                 </li>
                 
+                <!--Post-->
+                <li>
+                    <a class="<?= ($controller == 'post') ? 'active' : FALSE; ?>">
+                        <i class="fa fa-pencil"></i><span class="nav-label">Post</span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="<?= Url::to(['/post/create']) ?>"> New Post</a>
+                        </li>
+                        <li>
+                            <a href="<?= Url::to(['/post/']) ?>"> Manage Post</a>
+                        </li>
+                    </ul>
+                </li>
+                <!--end post-->
+                
                 <!-- categories //-->
                 <li class="<?= ($controller == 'category') ? 'active' : FALSE; ?>">
                     <a href=""><i class=" fa fa-tags"></i><span class="nav-label">Categories</span><span class="fa arrow"></span></a>
@@ -297,7 +313,11 @@ $method = Yii::$app->controller->action->id;
                 </nav>
         </div>
             
-            
+        <?= kartik\widgets\AlertBlock::widget([
+            "type" => \kartik\alert\AlertBlock::TYPE_GROWL,
+            'useSessionFlash'=> TRUE,
+            ]); 
+        ?>
             
         <div class="row wrapper border-bottom white-bg page-heading animated fadeInDown">
                 <div class="col-lg-12">

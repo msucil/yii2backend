@@ -4,15 +4,15 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Post;
-use backend\models\PostSearch;
+use backend\models\PageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PostController implements the CRUD actions for Post model.
+ * PageController implements the CRUD actions for Post model.
  */
-class PostController extends Controller
+class PageController extends Controller
 {
     public function behaviors()
     {
@@ -23,15 +23,6 @@ class PostController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            'access'=>[
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => TRUE,
-                        'roles' => ['@']
-                    ]
-                ]
-            ]
         ];
     }
 
@@ -41,10 +32,9 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PostSearch();
+        $searchModel = new PageSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        Yii::$app->session->setFlash('success',"Testing Growl Message");
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -56,12 +46,12 @@ class PostController extends Controller
      * @param integer $id
      * @return mixed
      */
-//    public function actionView($id)
-//    {
-//        return $this->render('view', [
-//            'model' => $this->findModel($id),
-//        ]);
-//    }
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Post model.
@@ -73,7 +63,7 @@ class PostController extends Controller
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+            return $this->redirect(['view', 'id' => $model->post_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -92,7 +82,7 @@ class PostController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('index');
+            return $this->redirect(['view', 'id' => $model->post_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -127,9 +117,5 @@ class PostController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    public function actionTest(){
-        print_r( \backend\helpers\FormFileHelper::getFileName("sample.jpg"));
     }
 }

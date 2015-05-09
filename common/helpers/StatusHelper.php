@@ -1,19 +1,21 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *@author Sushil Ale
+ *@email np.msushil@gmail.com/magar.sushilale@gmail.com
+ *@url www.msushil.com.np, www.linkedin.com/np/msushil
  */
 
+namespace common\helpers;
 /**
- * used for status of the post/page
- *
- * @author minamrosh
- * @name Sushil Ale
+ *Status Type Helper
+ * used on creating content
  */
 class StatusHelper {
+    
+    //content with status DRAFT should not visibel to public
     const DRAFT = 0;
+    //content with status PUBLISHED should visibel to public
     const PUBLISHED = 1;
     
     private static $status;

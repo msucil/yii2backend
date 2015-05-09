@@ -56,8 +56,8 @@ class Post extends \yii\db\ActiveRecord
             'post_id' => Yii::t('app', 'Post ID'),
             'post_title' => Yii::t('app', 'Post Title'),
             'slug' => Yii::t('app', 'Slug'),
-            'post_content' => Yii::t('app', 'Post Content'),
-            'status_id' => Yii::t('app', 'Status ID'),
+            'post_content' => Yii::t('app', 'Content'),
+            'status_id' => Yii::t('app', 'Status'),
             'meta_tags' => Yii::t('app', 'Meta Tags'),
             'meta_desc' => Yii::t('app', 'Meta Desc'),
             'image' => Yii::t('app', 'Image'),
@@ -65,8 +65,8 @@ class Post extends \yii\db\ActiveRecord
             'main_page' => Yii::t('app', 'Main Page'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'category_id' => Yii::t('app', 'Category ID'),
+            'user_id' => Yii::t('app', 'User'),
+            'category_id' => Yii::t('app', 'Category'),
         ];
     }
 }

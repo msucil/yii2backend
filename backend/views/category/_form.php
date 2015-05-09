@@ -16,7 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_desc')->textarea(['maxlength' => 250,'rows'=> 4]) ?>
 
-    <?= $form->field($model, 'category_type_id')->widget(kartik\widgets\Select2::className(),['options'=>['placeholder'=>'Select Category Type'],'data'=> common\helpers\CategoryTypeHelper::getTypes(),'pluginOptions'=>['allowClear'=>TRUE]]) ?>
+    <?= $form->field($model, 'category_type_id')->widget(kartik\widgets\Select2::className(),[
+        'options'=>['placeholder'=>'Select Category Type'],
+        'data'=> common\helpers\CategoryTypeHelper::getTypes(),
+        'pluginOptions'=>['allowClear'=>TRUE]
+        ]) ?>
     
 
     <div class="form-group">
